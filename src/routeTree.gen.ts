@@ -16,10 +16,13 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedDoctorRouteImport } from './routes/_authenticated/doctor'
 import { Route as AuthenticatedPatientRouteImport } from './routes/_authenticated/patient'
 import { Route as AuthenticatedStaffRouteImport } from './routes/_authenticated/staff'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedDoctorIndexRouteImport } from './routes/_authenticated/doctor.index'
 import { Route as AuthenticatedPatientIndexRouteImport } from './routes/_authenticated/patient.index'
 import { Route as AuthenticatedPatientBookRouteImport } from './routes/_authenticated/patient.book'
 import { Route as AuthenticatedPatientHistoryRouteImport } from './routes/_authenticated/patient.history'
 import { Route as AuthenticatedPatientProfileRouteImport } from './routes/_authenticated/patient.profile'
+import { Route as AuthenticatedStaffIndexRouteImport } from './routes/_authenticated/staff.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -55,6 +58,17 @@ const AuthenticatedStaffRoute = AuthenticatedStaffRouteImport.update({
   path: '/staff',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedDoctorIndexRoute =
+  AuthenticatedDoctorIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDoctorRoute,
+  } as any)
 const AuthenticatedPatientIndexRoute =
   AuthenticatedPatientIndexRouteImport.update({
     id: '/',
@@ -79,43 +93,54 @@ const AuthenticatedPatientProfileRoute =
     path: '/profile',
     getParentRoute: () => AuthenticatedPatientRoute,
   } as any)
+const AuthenticatedStaffIndexRoute = AuthenticatedStaffIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedStaffRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/doctor': typeof AuthenticatedDoctorRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/doctor': typeof AuthenticatedDoctorRouteWithChildren
   '/patient': typeof AuthenticatedPatientRouteWithChildren
-  '/staff': typeof AuthenticatedStaffRoute
+  '/staff': typeof AuthenticatedStaffRouteWithChildren
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/patient/profile': typeof AuthenticatedPatientProfileRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/doctor/': typeof AuthenticatedDoctorIndexRoute
   '/patient/': typeof AuthenticatedPatientIndexRoute
+  '/staff/': typeof AuthenticatedStaffIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/doctor': typeof AuthenticatedDoctorRoute
-  '/staff': typeof AuthenticatedStaffRoute
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/patient/profile': typeof AuthenticatedPatientProfileRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/doctor': typeof AuthenticatedDoctorIndexRoute
   '/patient': typeof AuthenticatedPatientIndexRoute
+  '/staff': typeof AuthenticatedStaffIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/doctor': typeof AuthenticatedDoctorRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/doctor': typeof AuthenticatedDoctorRouteWithChildren
   '/_authenticated/patient': typeof AuthenticatedPatientRouteWithChildren
-  '/_authenticated/staff': typeof AuthenticatedStaffRoute
+  '/_authenticated/staff': typeof AuthenticatedStaffRouteWithChildren
   '/_authenticated/patient/book': typeof AuthenticatedPatientBookRoute
   '/_authenticated/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/_authenticated/patient/profile': typeof AuthenticatedPatientProfileRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/doctor/': typeof AuthenticatedDoctorIndexRoute
   '/_authenticated/patient/': typeof AuthenticatedPatientIndexRoute
+  '/_authenticated/staff/': typeof AuthenticatedStaffIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -129,18 +154,21 @@ export interface FileRouteTypes {
     | '/patient/book'
     | '/patient/history'
     | '/patient/profile'
+    | '/admin/'
+    | '/doctor/'
     | '/patient/'
+    | '/staff/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/admin'
-    | '/doctor'
-    | '/staff'
     | '/patient/book'
     | '/patient/history'
     | '/patient/profile'
+    | '/admin'
+    | '/doctor'
     | '/patient'
+    | '/staff'
   id:
     | '__root__'
     | '/'
@@ -153,7 +181,10 @@ export interface FileRouteTypes {
     | '/_authenticated/patient/book'
     | '/_authenticated/patient/history'
     | '/_authenticated/patient/profile'
+    | '/_authenticated/admin/'
+    | '/_authenticated/doctor/'
     | '/_authenticated/patient/'
+    | '/_authenticated/staff/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -213,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStaffRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/doctor/': {
+      id: '/_authenticated/doctor/'
+      path: '/'
+      fullPath: '/doctor/'
+      preLoaderRoute: typeof AuthenticatedDoctorIndexRouteImport
+      parentRoute: typeof AuthenticatedDoctorRoute
+    }
     '/_authenticated/patient/': {
       id: '/_authenticated/patient/'
       path: '/'
@@ -241,8 +286,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPatientProfileRouteImport
       parentRoute: typeof AuthenticatedPatientRoute
     }
+    '/_authenticated/staff/': {
+      id: '/_authenticated/staff/'
+      path: '/'
+      fullPath: '/staff/'
+      preLoaderRoute: typeof AuthenticatedStaffIndexRouteImport
+      parentRoute: typeof AuthenticatedStaffRoute
+    }
   }
 }
+
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedDoctorRouteChildren {
+  AuthenticatedDoctorIndexRoute: typeof AuthenticatedDoctorIndexRoute
+}
+
+const AuthenticatedDoctorRouteChildren: AuthenticatedDoctorRouteChildren = {
+  AuthenticatedDoctorIndexRoute: AuthenticatedDoctorIndexRoute,
+}
+
+const AuthenticatedDoctorRouteWithChildren =
+  AuthenticatedDoctorRoute._addFileChildren(AuthenticatedDoctorRouteChildren)
 
 interface AuthenticatedPatientRouteChildren {
   AuthenticatedPatientBookRoute: typeof AuthenticatedPatientBookRoute
@@ -261,18 +335,29 @@ const AuthenticatedPatientRouteChildren: AuthenticatedPatientRouteChildren = {
 const AuthenticatedPatientRouteWithChildren =
   AuthenticatedPatientRoute._addFileChildren(AuthenticatedPatientRouteChildren)
 
+interface AuthenticatedStaffRouteChildren {
+  AuthenticatedStaffIndexRoute: typeof AuthenticatedStaffIndexRoute
+}
+
+const AuthenticatedStaffRouteChildren: AuthenticatedStaffRouteChildren = {
+  AuthenticatedStaffIndexRoute: AuthenticatedStaffIndexRoute,
+}
+
+const AuthenticatedStaffRouteWithChildren =
+  AuthenticatedStaffRoute._addFileChildren(AuthenticatedStaffRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedDoctorRoute: typeof AuthenticatedDoctorRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedDoctorRoute: typeof AuthenticatedDoctorRouteWithChildren
   AuthenticatedPatientRoute: typeof AuthenticatedPatientRouteWithChildren
-  AuthenticatedStaffRoute: typeof AuthenticatedStaffRoute
+  AuthenticatedStaffRoute: typeof AuthenticatedStaffRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedDoctorRoute: AuthenticatedDoctorRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedDoctorRoute: AuthenticatedDoctorRouteWithChildren,
   AuthenticatedPatientRoute: AuthenticatedPatientRouteWithChildren,
-  AuthenticatedStaffRoute: AuthenticatedStaffRoute,
+  AuthenticatedStaffRoute: AuthenticatedStaffRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
