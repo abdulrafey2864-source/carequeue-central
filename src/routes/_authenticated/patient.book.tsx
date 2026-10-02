@@ -34,7 +34,7 @@ function Book() {
     setBusy(true);
     const { data: id, error } = await supabase.rpc("book_appointment", { _doctor_id: doc, _date: date });
     setBusy(false);
-    if (error) return toast.error(errText(error, t));
+    if (error) { toast.error(errText(error, t)); return; }
     const { data } = await supabase.from("appointments").select("token_number").eq("id", id as string).single();
     toast.success(`${t("booked")} #${data?.token_number}`);
     navigate({ to: "/patient" });
