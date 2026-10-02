@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790914775012,
+      "tag": "0000_hospital_core",
+      "breakpoints": true
+    }
+  ]
 }
