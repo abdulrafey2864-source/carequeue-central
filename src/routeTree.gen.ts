@@ -17,6 +17,10 @@ import { Route as AuthenticatedDoctorRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedPatientRouteImport } from './routes/_authenticated/patient'
 import { Route as AuthenticatedStaffRouteImport } from './routes/_authenticated/staff'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminDepartmentsRouteImport } from './routes/_authenticated/admin.departments'
+import { Route as AuthenticatedAdminPeopleRouteImport } from './routes/_authenticated/admin.people'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedDoctorIndexRouteImport } from './routes/_authenticated/doctor.index'
 import { Route as AuthenticatedDoctorEmergencyRouteImport } from './routes/_authenticated/doctor.emergency'
 import { Route as AuthenticatedPatientIndexRouteImport } from './routes/_authenticated/patient.index'
@@ -66,6 +70,29 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminDepartmentsRoute =
+  AuthenticatedAdminDepartmentsRouteImport.update({
+    id: '/departments',
+    path: '/departments',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPeopleRoute =
+  AuthenticatedAdminPeopleRouteImport.update({
+    id: '/people',
+    path: '/people',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedDoctorIndexRoute =
   AuthenticatedDoctorIndexRouteImport.update({
     id: '/',
@@ -127,6 +154,10 @@ export interface FileRoutesByFullPath {
   '/doctor': typeof AuthenticatedDoctorRouteWithChildren
   '/patient': typeof AuthenticatedPatientRouteWithChildren
   '/staff': typeof AuthenticatedStaffRouteWithChildren
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/departments': typeof AuthenticatedAdminDepartmentsRoute
+  '/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/doctor/emergency': typeof AuthenticatedDoctorEmergencyRoute
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
@@ -141,6 +172,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/departments': typeof AuthenticatedAdminDepartmentsRoute
+  '/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/doctor/emergency': typeof AuthenticatedDoctorEmergencyRoute
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
@@ -161,6 +196,10 @@ export interface FileRoutesById {
   '/_authenticated/doctor': typeof AuthenticatedDoctorRouteWithChildren
   '/_authenticated/patient': typeof AuthenticatedPatientRouteWithChildren
   '/_authenticated/staff': typeof AuthenticatedStaffRouteWithChildren
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/departments': typeof AuthenticatedAdminDepartmentsRoute
+  '/_authenticated/admin/people': typeof AuthenticatedAdminPeopleRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/doctor/emergency': typeof AuthenticatedDoctorEmergencyRoute
   '/_authenticated/patient/book': typeof AuthenticatedPatientBookRoute
   '/_authenticated/patient/history': typeof AuthenticatedPatientHistoryRoute
@@ -181,6 +220,10 @@ export interface FileRouteTypes {
     | '/doctor'
     | '/patient'
     | '/staff'
+    | '/admin/audit'
+    | '/admin/departments'
+    | '/admin/people'
+    | '/admin/settings'
     | '/doctor/emergency'
     | '/patient/book'
     | '/patient/history'
@@ -195,6 +238,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/admin/audit'
+    | '/admin/departments'
+    | '/admin/people'
+    | '/admin/settings'
     | '/doctor/emergency'
     | '/patient/book'
     | '/patient/history'
@@ -214,6 +261,10 @@ export interface FileRouteTypes {
     | '/_authenticated/doctor'
     | '/_authenticated/patient'
     | '/_authenticated/staff'
+    | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/departments'
+    | '/_authenticated/admin/people'
+    | '/_authenticated/admin/settings'
     | '/_authenticated/doctor/emergency'
     | '/_authenticated/patient/book'
     | '/_authenticated/patient/history'
@@ -290,6 +341,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/departments': {
+      id: '/_authenticated/admin/departments'
+      path: '/departments'
+      fullPath: '/admin/departments'
+      preLoaderRoute: typeof AuthenticatedAdminDepartmentsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/people': {
+      id: '/_authenticated/admin/people'
+      path: '/people'
+      fullPath: '/admin/people'
+      preLoaderRoute: typeof AuthenticatedAdminPeopleRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/doctor/': {
       id: '/_authenticated/doctor/'
       path: '/'
@@ -357,10 +436,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminDepartmentsRoute: typeof AuthenticatedAdminDepartmentsRoute
+  AuthenticatedAdminPeopleRoute: typeof AuthenticatedAdminPeopleRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminDepartmentsRoute: AuthenticatedAdminDepartmentsRoute,
+  AuthenticatedAdminPeopleRoute: AuthenticatedAdminPeopleRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
