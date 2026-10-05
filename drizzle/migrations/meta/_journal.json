@@ -8,6 +8,13 @@
       "when": 1790914775012,
       "tag": "0000_hospital_core",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791212338559,
+      "tag": "0001_tighten_reference_reads",
+      "breakpoints": true
     }
   ]
 }
