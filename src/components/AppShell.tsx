@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, type LinkProps } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { Bell, Languages, LogOut, Activity } from "lucide-react";
 import { toast } from "sonner";
@@ -8,14 +8,17 @@ import { useI18n } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const NAV: Record<Role, { to: "/patient" | "/patient/book" | "/patient/history" | "/patient/profile" | "/staff" | "/doctor" | "/admin"; k: string }[]> = {
+const NAV: Record<Role, { to: LinkProps["to"] & string; k: string }[]> = {
   patient: [
     { to: "/patient", k: "myQueue" }, { to: "/patient/book", k: "book" },
     { to: "/patient/history", k: "history" }, { to: "/patient/profile", k: "profile" },
   ],
-  staff: [{ to: "/staff", k: "reception" }],
-  doctor: [{ to: "/doctor", k: "doctorQueue" }],
-  admin: [{ to: "/admin", k: "overview" }],
+  staff: [{ to: "/staff", k: "reception" }, { to: "/staff/photos", k: "photos" }],
+  doctor: [{ to: "/doctor", k: "doctorQueue" }, { to: "/doctor/emergency", k: "emergency" }],
+  admin: [
+    { to: "/admin", k: "overview" }, { to: "/admin/people", k: "people" }, { to: "/admin/departments", k: "departments" },
+    { to: "/admin/settings", k: "queueRules" }, { to: "/admin/audit", k: "audit" },
+  ],
 };
 
 type Notif = { id: string; title_en: string; title_ur: string; body_en: string; body_ur: string; read: boolean; created_at: string };
