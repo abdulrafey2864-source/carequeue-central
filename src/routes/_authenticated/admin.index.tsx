@@ -34,7 +34,7 @@ function Overview() {
     const noShows = closed.filter((r) => r.status === "no_show").length;
     const waits = rows.filter((r) => r.checked_in_at && r.called_at).map((r) => (new Date(r.called_at!).getTime() - new Date(r.checked_in_at!).getTime()) / 60000);
     const hours = Array.from({ length: 24 }, (_, h) => ({ hour: `${h}:00`, patients: 0 }));
-    rows.forEach((r) => { const ts = r.checked_in_at ?? r.created_at; hours[(new Date(ts).getUTCHours() + 5) % 24].patients++; });
+    rows.forEach((r) => { const ts = r.checked_in_at ?? r.created_at; const slot = hours[(new Date(ts).getUTCHours() + 5) % 24]; if (slot) slot.patients++; });
     return {
       today,
       served: rows.filter((r) => r.status === "completed").length,

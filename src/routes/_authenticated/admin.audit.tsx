@@ -37,7 +37,7 @@ function Audit() {
                 <td className="whitespace-nowrap p-3">{new Date(l.created_at).toLocaleString()}</td>
                 <td className="p-3">{l.actor_name ?? "—"}</td>
                 <td className="p-3 font-medium">{l.action.replace(/_/g, " ")}</td>
-                <td className="p-3"><span className={`rounded-full px-2 py-0.5 text-xs ${pri[l.priority] ?? pri.normal}`}>{l.priority}</span></td>
+                <td className="p-3"><span className={`rounded-full px-2 py-0.5 text-xs ${pri[l.priority] ?? pri["normal"]}`}>{l.priority}</span></td>
                 <td className="max-w-md truncate p-3 font-mono text-xs text-muted-foreground" title={JSON.stringify(l.details)}>{JSON.stringify(l.details)}</td>
               </tr>
             ))}
