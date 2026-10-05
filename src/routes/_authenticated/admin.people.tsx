@@ -43,7 +43,7 @@ function People() {
 
   const assign = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.rpc("assign_role", { _email: f.email, _role: f.role, _department_id: f.dept || undefined, _specialty: f.specialty || undefined });
+    const { error } = await supabase.rpc("assign_role", { _email: f.email, _role: f.role, ...(f.dept ? { _department_id: f.dept } : {}), ...(f.specialty ? { _specialty: f.specialty } : {}) });
     if (error) { toast.error(errText(error, t)); return; }
     toast.success("Role assigned"); setF({ ...f, email: "", specialty: "" }); load();
   };
