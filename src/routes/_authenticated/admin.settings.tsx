@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { PageTitle } from "@/components/AppShell";
 import { useI18n } from "@/lib/i18n";
+import { seedDemoData } from "@/lib/seed.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({ component: Settings });
 
@@ -36,6 +37,13 @@ function Settings() {
         {num("max_daily_walkins", "Max walk-ins per doctor per day")}
         <Button>{t("save")}</Button>
       </form>
+      <div className="mt-6 max-w-md space-y-3 rounded-2xl border bg-card p-6">
+        <h3 className="font-semibold">Demo hospital data</h3>
+        <p className="text-sm text-muted-foreground">Adds 4 doctors, 2 staff, 12 patients, 30 days of visits and today's live queue. All demo accounts use password Demo@12345.</p>
+        <Button type="button" variant="outline" onClick={async () => {
+          try { const r = await seedDemoData(); toast.success(r.message); } catch (e) { toast.error((e as Error).message); }
+        }}>Load demo data</Button>
+      </div>
     </div>
   );
 }
