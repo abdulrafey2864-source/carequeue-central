@@ -445,6 +445,41 @@ export type Database = {
         }
         Relationships: []
       }
+      visit_photos: {
+        Row: {
+          appointment_id: string
+          created_at: string
+          id: string
+          path: string
+          patient_id: string
+          taken_by: string
+        }
+        Insert: {
+          appointment_id: string
+          created_at?: string
+          id?: string
+          path: string
+          patient_id: string
+          taken_by: string
+        }
+        Update: {
+          appointment_id?: string
+          created_at?: string
+          id?: string
+          path?: string
+          patient_id?: string
+          taken_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_photos_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -469,6 +504,10 @@ export type Database = {
       complete_visit: { Args: { _id: string }; Returns: undefined }
       doctor_can_view: {
         Args: { _doc: string; _patient: string }
+        Returns: boolean
+      }
+      doctor_owns_appt: {
+        Args: { _appt: string; _doc: string }
         Returns: boolean
       }
       ensure_profile: { Args: { _full_name?: string }; Returns: string }
