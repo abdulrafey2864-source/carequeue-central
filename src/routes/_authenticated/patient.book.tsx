@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,7 +15,6 @@ type Doc = { user_id: string; full_name: string; specialty: string | null; depar
 
 function Book() {
   const { t, lang } = useI18n();
-  const { profile } = useAuth();
   const navigate = useNavigate();
   const [depts, setDepts] = useState<Dept[]>([]);
   const [docs, setDocs] = useState<Doc[]>([]);
@@ -40,14 +39,6 @@ function Book() {
     navigate({ to: "/patient" });
   };
 
-  if (!profile?.photo_locked_at) {
-    return (
-      <div className="rounded-2xl border bg-card p-10 text-center">
-        <p>{t("photoNeeded")}</p>
-        <Button className="mt-4" asChild><Link to="/patient/profile">{t("addPhoto")}</Link></Button>
-      </div>
-    );
-  }
 
   const deptDocs = docs.filter((d) => d.department_id === dept);
   return (

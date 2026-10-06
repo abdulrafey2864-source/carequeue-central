@@ -1,14 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Lock } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageTitle } from "@/components/AppShell";
-import { PatientPhoto } from "@/components/PatientPhoto";
-import { CameraCapture } from "@/components/CameraCapture";
 import { useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
 
@@ -43,17 +40,6 @@ function ProfilePage() {
           </div>
           <Button>{t("save")}</Button>
         </form>
-        <div className="rounded-2xl border bg-card p-6">
-          <h2 className="mb-4 text-xl font-semibold">{t("consentTitle")}</h2>
-          {profile?.photo_locked_at ? (
-            <div className="flex flex-col items-center gap-3 text-center">
-              <PatientPhoto path={profile.photo_path} className="h-48 w-48" />
-              <p className="flex items-center gap-2 text-sm text-muted-foreground"><Lock className="h-4 w-4" />{t("photoLocked")}</p>
-            </div>
-          ) : (
-            <CameraCapture onLocked={() => { toast.success(t("saved")); refresh(); }} />
-          )}
-        </div>
       </div>
     </div>
   );

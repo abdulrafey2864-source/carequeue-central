@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { StatusBadge } from "@/components/AppShell";
 import { PatientPhoto } from "@/components/PatientPhoto";
 import { ClinicalHistory } from "@/components/ClinicalHistory";
+import { VisitPhotos } from "@/components/VisitPhotos";
 import { useI18n, errText } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/doctor/visit/$id")({ component: Visit });
@@ -110,6 +111,12 @@ function Visit() {
               </div>
             )}
           </div>
+          {a.patient_id && (
+            <div className="rounded-2xl border bg-card p-5">
+              <h2 className="mb-3 text-lg font-semibold">Visit photos (optional)</h2>
+              <VisitPhotos appointmentId={a.id} patientId={a.patient_id} canAdd={a.status === "in_consultation" || a.status === "completed"} />
+            </div>
+          )}
           <div className="rounded-2xl border bg-card p-5">
             <h2 className="mb-3 text-lg font-semibold">Previous visits</h2>
             {a.patient_id ? <ClinicalHistory patientId={a.patient_id} excludeAppointment={a.id} /> : <p className="text-sm text-muted-foreground">Walk-in without an account — no history.</p>}
