@@ -13,7 +13,7 @@ const NAV: Record<Role, { to: LinkProps["to"] & string; k: string }[]> = {
     { to: "/patient", k: "myQueue" }, { to: "/patient/book", k: "book" },
     { to: "/patient/history", k: "history" }, { to: "/patient/profile", k: "profile" },
   ],
-  staff: [{ to: "/staff", k: "reception" }, { to: "/staff/photos", k: "photos" }],
+  staff: [{ to: "/staff", k: "reception" }],
   doctor: [{ to: "/doctor", k: "doctorQueue" }, { to: "/doctor/emergency", k: "emergency" }],
   admin: [
     { to: "/admin", k: "overview" }, { to: "/admin/people", k: "people" }, { to: "/admin/departments", k: "departments" },
