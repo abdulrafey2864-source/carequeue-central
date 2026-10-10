@@ -28,7 +28,6 @@ import { Route as AuthenticatedPatientBookRouteImport } from './routes/_authenti
 import { Route as AuthenticatedPatientHistoryRouteImport } from './routes/_authenticated/patient.history'
 import { Route as AuthenticatedPatientProfileRouteImport } from './routes/_authenticated/patient.profile'
 import { Route as AuthenticatedStaffIndexRouteImport } from './routes/_authenticated/staff.index'
-import { Route as AuthenticatedStaffPhotosRouteImport } from './routes/_authenticated/staff.photos'
 import { Route as AuthenticatedDoctorVisitIdRouteImport } from './routes/_authenticated/doctor.visit.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -134,12 +133,6 @@ const AuthenticatedStaffIndexRoute = AuthenticatedStaffIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedStaffRoute,
 } as any)
-const AuthenticatedStaffPhotosRoute =
-  AuthenticatedStaffPhotosRouteImport.update({
-    id: '/photos',
-    path: '/photos',
-    getParentRoute: () => AuthenticatedStaffRoute,
-  } as any)
 const AuthenticatedDoctorVisitIdRoute =
   AuthenticatedDoctorVisitIdRouteImport.update({
     id: '/visit/$id',
@@ -162,7 +155,6 @@ export interface FileRoutesByFullPath {
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/patient/profile': typeof AuthenticatedPatientProfileRoute
-  '/staff/photos': typeof AuthenticatedStaffPhotosRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/doctor/': typeof AuthenticatedDoctorIndexRoute
   '/patient/': typeof AuthenticatedPatientIndexRoute
@@ -180,7 +172,6 @@ export interface FileRoutesByTo {
   '/patient/book': typeof AuthenticatedPatientBookRoute
   '/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/patient/profile': typeof AuthenticatedPatientProfileRoute
-  '/staff/photos': typeof AuthenticatedStaffPhotosRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/doctor': typeof AuthenticatedDoctorIndexRoute
   '/patient': typeof AuthenticatedPatientIndexRoute
@@ -204,7 +195,6 @@ export interface FileRoutesById {
   '/_authenticated/patient/book': typeof AuthenticatedPatientBookRoute
   '/_authenticated/patient/history': typeof AuthenticatedPatientHistoryRoute
   '/_authenticated/patient/profile': typeof AuthenticatedPatientProfileRoute
-  '/_authenticated/staff/photos': typeof AuthenticatedStaffPhotosRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/doctor/': typeof AuthenticatedDoctorIndexRoute
   '/_authenticated/patient/': typeof AuthenticatedPatientIndexRoute
@@ -228,7 +218,6 @@ export interface FileRouteTypes {
     | '/patient/book'
     | '/patient/history'
     | '/patient/profile'
-    | '/staff/photos'
     | '/admin/'
     | '/doctor/'
     | '/patient/'
@@ -246,7 +235,6 @@ export interface FileRouteTypes {
     | '/patient/book'
     | '/patient/history'
     | '/patient/profile'
-    | '/staff/photos'
     | '/admin'
     | '/doctor'
     | '/patient'
@@ -269,7 +257,6 @@ export interface FileRouteTypes {
     | '/_authenticated/patient/book'
     | '/_authenticated/patient/history'
     | '/_authenticated/patient/profile'
-    | '/_authenticated/staff/photos'
     | '/_authenticated/admin/'
     | '/_authenticated/doctor/'
     | '/_authenticated/patient/'
@@ -418,13 +405,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStaffIndexRouteImport
       parentRoute: typeof AuthenticatedStaffRoute
     }
-    '/_authenticated/staff/photos': {
-      id: '/_authenticated/staff/photos'
-      path: '/photos'
-      fullPath: '/staff/photos'
-      preLoaderRoute: typeof AuthenticatedStaffPhotosRouteImport
-      parentRoute: typeof AuthenticatedStaffRoute
-    }
     '/_authenticated/doctor/visit/$id': {
       id: '/_authenticated/doctor/visit/$id'
       path: '/visit/$id'
@@ -487,12 +467,10 @@ const AuthenticatedPatientRouteWithChildren =
   AuthenticatedPatientRoute._addFileChildren(AuthenticatedPatientRouteChildren)
 
 interface AuthenticatedStaffRouteChildren {
-  AuthenticatedStaffPhotosRoute: typeof AuthenticatedStaffPhotosRoute
   AuthenticatedStaffIndexRoute: typeof AuthenticatedStaffIndexRoute
 }
 
 const AuthenticatedStaffRouteChildren: AuthenticatedStaffRouteChildren = {
-  AuthenticatedStaffPhotosRoute: AuthenticatedStaffPhotosRoute,
   AuthenticatedStaffIndexRoute: AuthenticatedStaffIndexRoute,
 }
 
